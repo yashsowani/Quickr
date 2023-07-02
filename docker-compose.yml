@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  quickr:
+    image: quickr:latest
+    container_name: quickr
+    build: .
+
+    restart: always
+    ports:
+      - 8000:8000

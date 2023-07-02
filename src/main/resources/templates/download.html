@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Quickr Download</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid text-center">
+  <div>
+    <h1>Quickr Download</h1>
+  </div>
+  <div class="row border rounded m-3 p-3">
+    <th:block th:each="doc:${documentList}">
+      <div class="col">
+        <div>
+          <img th:src="@{/images/file-arrow-down-solid.svg}" width="50"/>
+        </div>
+        <div>
+          <a th:href="@{'/view?id='+${doc.id}}">[[${doc.name}]]</a>
+        </div>
+        <div>
+          ([[${#numbers.formatInteger(doc.size, 4, 'COMMA')}]] bytes)
+        </div>
+        <div class="btn-group" role="group" aria-label="File Operations">
+          <a th:href="@{'/download?id='+${doc.id}}" class="btn btn-primary">Download</a>
+          <a th:href="@{'/delete?id='+${doc.id}}" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    </th:block>
+  </div>
+</div>
+</body>
+</html>

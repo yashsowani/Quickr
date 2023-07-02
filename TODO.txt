@@ -1,0 +1,12 @@
+
+Next steps
+
+First of all; security. The end-points are not secured at all currently. But since these are standard controller endpoints, you can use Spring Security to secure them. The service can be extended to also keep track of file ownership in the database.
+
+If you would want to bring a service like this to the 'next level' so it’s production ready and scalable, you should consider using a CDN to host the files. This way download speeds won’t be bottle necked by your service. It’s also important to keep in mind that a file upload will take up a request worker thread, so by default you can only do 200 uploads in parallel.
+
+If you upload the files to a CDN instead of the local file system, your 'download' end-point would not get the data from the CDN and pass it on. Instead, you would do a secure redirect to the CDN url passing in a single-use authorization token. With for example Amazon S3 you can do this, as well as let the upload be done directly to S3.
+
+Also, if you’re curious how to do integration testing for these kinds of file uploads, please check out the FileServiceApplicationTests
+
+While this service is tailored to upload/download any kind of file, by restricting it to only images of a certain content type and within certain sizes, you can create an image upload service similar to ImgUr too. Or video; have fun creating your own version of YouTube! The only real difference here is that for the 'download' you don’t want to force a download so you’d remove the Content-Disposition header.

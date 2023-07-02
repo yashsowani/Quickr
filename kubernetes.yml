@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: quickr
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quickr
+  template:
+    metadata:
+      labels:
+        app: quickr
+        version: v1
+    spec:
+      containers:
+        - name: quickr
+          image: grish98/quickr:0.03
+          ports:
+            - containerPort: 8000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: quickr
+  labels:
+    app: quickr
+spec:
+  type: LoadBalancer
+  selector:
+    app: quickr
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
